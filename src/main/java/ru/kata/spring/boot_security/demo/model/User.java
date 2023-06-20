@@ -23,14 +23,22 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @NonNull
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
     public User() {
     }
 
-    public User(String firstName, String lastName, Integer age, String email) {
+    public User(String firstName, String lastName, Integer age, String email, String password, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -65,20 +73,31 @@ public class User {
         this.age = age;
     }
 
+    @NonNull
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@NonNull String email) {
         this.email = email;
     }
 
+    @NonNull
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(@NonNull String password) {
         this.password = password;
+    }
+
+    @NonNull
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(@NonNull Role role) {
+        this.role = role;
     }
 
     @Override

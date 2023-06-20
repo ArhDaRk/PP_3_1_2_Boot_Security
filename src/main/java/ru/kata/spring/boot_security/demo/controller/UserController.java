@@ -5,47 +5,47 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserDetailService;
 
 
 @Controller
 @RequestMapping("/")
 public class UserController {
 
-    private final UserService userService;
+    private final UserDetailService userDetailService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
     }
 
-    @GetMapping("/table")
+    @GetMapping("/admin")
     public String userTable(Model model, User user) {
-        model.addAttribute("userList", userService.findAll());
-        return "table";
+        model.addAttribute("userList", userDetailService.findAll());
+        return "admin";
     }
 
-    @PostMapping("/table")
+    @PostMapping("/admin")
     public String createUser(User user) {
-        userService.save(user);
-        return "redirect:/table";
+        userDetailService.save(user);
+        return "redirect:/admin";
     }
 
-    @DeleteMapping("/table/{id}")
+    @DeleteMapping("/admin/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return "redirect:/table";
+        userDetailService.delete(id);
+        return "redirect:/admin";
     }
 
     @GetMapping("/update-user/{id}")
     public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userDetailService.findById(id));
         return "update-user";
     }
 
     @PutMapping("/update-user")
     public String updateUser(User user) {
-        userService.update(user);
-        return "redirect:/table";
+        userDetailService.update(user);
+        return "redirect:/admin";
     }
 }
