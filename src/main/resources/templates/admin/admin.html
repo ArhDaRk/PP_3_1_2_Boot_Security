@@ -1,5 +1,8 @@
+
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" class="h-100"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,18 +17,69 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
-    <title>Update User</title>
+    <title>Admin Page</title>
 </head>
 <body>
-                <form id="create-form" action="#" th:method="put" th:action="@{/update-user}" th:object="${user}">
-                    <div class="col-sm-6">
-                        <label for="id" class="form-label">ID</label>
-                        <input readonly type="text" class="form-control" th:field="*{id}" id="id"
-                               placeholder="Ivan" value="" required>
-                        <div class="invalid-feedback">
-                            Valid first name is required.
-                        </div>
-                    </div>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <p class="navbar-brand text-white">
+            <b><span class="align-middle" th:text="${user.email}"></span></b>
+            <span class="align-middle">with roles:</span>
+            <span class="align-middle" th:text="${user.roles}"></span>
+        </p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+        </form>
+    </div>
+</nav>
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-info">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tr>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:utext="${user.getId()}"></td>
+            <td th:utext="${user.getFirstName()}"></td>
+            <td th:utext="${user.getLastName}"></td>
+            <td th:utext="${user.getAge()}"></td>
+            <td th:utext="${user.getEmail()}"></td>
+            <td> <a type="button" class="btn btn-primary" th:href="@{update-user/{id}(id=${user.getId()})}">Edit User</a>
+            </td>
+            <td>
+                <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
+                    <input class="btn btn-danger rounded px-3" type="submit" value="Delete">
+                </form>
+            </td>
+        </tbody>
+    </tr>
+</table>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Create new User
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="create-form" action="#" th:method="POST" th:action="@{/admin}" th:object="${user}">
                     <div class="col-sm-6">
                         <label for="firstName" class="form-label">First name</label>
                         <input type="text" class="form-control" th:field="*{firstName}" id="firstName"
@@ -35,7 +89,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <label for="lastName" class="form-label">Last name</label>
+                        <label for="lastName" class="form-label">First name</label>
                         <input type="text" class="form-control" th:field="*{lastName}" id="lastName"
                                placeholder="Ivanov" value="" required>
                         <div class="invalid-feedback">
@@ -61,10 +115,11 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" >Close</button>
-                <button type="submit" form="create-form" class="btn btn-primary">Update</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" form="create-form" class="btn btn-primary">Add</button>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
