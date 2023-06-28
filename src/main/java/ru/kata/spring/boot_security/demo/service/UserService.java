@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserService {
-    User getUserFromUserDtoAndRole(UserDto userDto, Set<Role> role);
+    User getUserFromUserDtoAndRoles(UserDto userDto, Set<Role> role);
 
     User save(User user);
 

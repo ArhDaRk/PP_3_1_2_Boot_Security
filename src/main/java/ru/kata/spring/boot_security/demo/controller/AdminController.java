@@ -43,7 +43,7 @@ public class AdminController {
     public String createUser(UserDto userDto) {
         Set<Role> roles = userDto.getRoles().stream().map(roleService::findRole)
                 .collect(Collectors.toSet());
-        User user = userService.getUserFromUserDtoAndRole(userDto, roles);
+        User user = userService.getUserFromUserDtoAndRoles(userDto, roles);
         userService.save(user);
         return "redirect:/admin";
     }
@@ -66,7 +66,7 @@ public class AdminController {
     public String updateUser(UserDto userDto) {
         Set<Role> roles = userDto.getRoles().stream().map(roleService::findRole)
                 .collect(Collectors.toSet());
-        User user = userService.getUserFromUserDtoAndRole(userDto, roles);
+        User user = userService.getUserFromUserDtoAndRoles(userDto, roles);
         userService.update(user);
         return "redirect:/admin";
     }

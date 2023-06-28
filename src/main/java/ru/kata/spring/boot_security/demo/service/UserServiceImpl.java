@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
     @Override
-    public User getUserFromUserDtoAndRole(UserDto userDto, Set<Role> role){
+    public User getUserFromUserDtoAndRoles(UserDto userDto, Set<Role> role){
         User user = new User(
                 userDto.getId(),
                 userDto.getFirstName(),
