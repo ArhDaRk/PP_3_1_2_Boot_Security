@@ -31,6 +31,7 @@
 			<version>8.0.32</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!--			использую в DTO-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
